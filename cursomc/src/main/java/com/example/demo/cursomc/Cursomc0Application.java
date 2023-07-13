@@ -56,7 +56,7 @@ public class Cursomc0Application implements CommandLineRunner{
 		Estado est1 = new Estado(null, "Bahia");
 		Estado est2 = new Estado(null, "Fortaleza");
 		
-		Cidade cid1 = new Cidade(null, "Salvador", est2);
+		Cidade cid1 = new Cidade(null, "Salvador", est1);
 		Cidade cid2 = new Cidade(null, "Recife", est2);
 		Cidade cid3 = new Cidade(null, "Feira de Santana", est1);
 		
