@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-=======
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
->>>>>>> e523a24 (Ajustes no endPoint /Categorias/{id})
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,10 +26,7 @@ public class Produto implements Serializable{
 	private String nome;
 	private Double preco;
 	
-<<<<<<< HEAD
-=======
 	@JsonBackReference
->>>>>>> e523a24 (Ajustes no endPoint /Categorias/{id})
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 		joinColumns = @JoinColumn(name = "produto_id"),
@@ -92,3 +88,4 @@ public class Produto implements Serializable{
 	
 	
 }
+
