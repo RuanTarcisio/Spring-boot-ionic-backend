@@ -24,6 +24,7 @@ public class CategoriaResource {
 	
 	@RequestMapping(value= "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> search (@PathVariable Integer id) {
+<<<<<<< HEAD
 		Categoria obj = service.find(id); 
 //		List<Categoria> lista = new ArrayList<Categoria>();
 //		Categoria cat1 = new Categoria(1, "Informatica");
@@ -31,6 +32,10 @@ public class CategoriaResource {
 //		
 //		lista.add(cat1);
 //		lista.add(cat2);
+=======
+
+		Categoria obj = service.find(id); 
+>>>>>>> e523a24 (Ajustes no endPoint /Categorias/{id})
 		
 		return ResponseEntity.ok().body(obj);
 		
