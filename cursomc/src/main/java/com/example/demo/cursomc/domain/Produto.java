@@ -4,15 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
-=======
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
->>>>>>> e523a24efbbd2d6b5cec58f8555437405425e53c
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -90,10 +85,4 @@ public class Produto implements Serializable{
 		this.categorias = categorias;
 	}
 	
-	
-	
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> e523a24efbbd2d6b5cec58f8555437405425e53c

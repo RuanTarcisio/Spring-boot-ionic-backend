@@ -23,10 +23,6 @@ public class Categoria implements Serializable{
 	private String nome;
 	
 	@JsonManagedReference
-<<<<<<< HEAD
-
-=======
->>>>>>> e523a24efbbd2d6b5cec58f8555437405425e53c
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
