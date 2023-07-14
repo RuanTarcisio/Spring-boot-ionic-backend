@@ -7,6 +7,9 @@ import java.util.Objects;
 
 import org.hibernate.annotations.ManyToAny;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +27,13 @@ public class Estado implements Serializable{
 	private String nome;
 	
 	@OneToMany(mappedBy = "estado")
+	@JsonIgnore
 	private List<Cidade> cidades = new ArrayList<Cidade>();
+
+	
+	public Estado() {
+	
+	}
 
 	public Estado(Integer id, String nome) {
 		this.id = id;

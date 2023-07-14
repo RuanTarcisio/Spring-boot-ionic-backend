@@ -3,6 +3,8 @@ package com.example.demo.cursomc.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +27,7 @@ public class Cidade implements Serializable{
 	private Estado estado;
 	
 	public Cidade() {
-		super();
+	
 	}
 	
 	public Cidade(Integer id, String nome, Estado estado) {
