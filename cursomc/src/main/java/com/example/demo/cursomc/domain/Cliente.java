@@ -37,6 +37,8 @@ public class Cliente implements Serializable{
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 	
+	private Set<Pedido> pedidos = new HashSet<Pedido>();
+	
 	public Cliente() {
 		super();
 	}
@@ -96,6 +98,18 @@ public class Cliente implements Serializable{
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public Set<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public void setTipoCliente(Integer tipoCliente) {
+		this.tipoCliente = tipoCliente;
 	}
 
 	public Set<String> getTelefones() {
