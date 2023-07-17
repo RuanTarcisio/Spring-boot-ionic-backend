@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.EmbeddedId;
-
+import jakarta.persistence.Entity;
+@Entity
 public class ItemPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -15,6 +16,12 @@ public class ItemPedido implements Serializable{
 	private Integer quantidade;
 	private Double preco;
 	
+	
+	
+	public ItemPedido() {
+		super();
+	}
+
 	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
 		id.setPedido(pedido);

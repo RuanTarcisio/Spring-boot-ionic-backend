@@ -14,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -35,7 +36,7 @@ public class Pedido implements Serializable {private static final long serialVer
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
-//	@OneToOne(mappedBy = "id.pedido")
+	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<ItemPedido>();
 
 	public Pedido() {
