@@ -11,7 +11,7 @@ import com.example.demo.cursomc.domain.Cliente;
 import com.example.demo.cursomc.service.ClienteService;
 
 @RestController
-@RequestMapping(value="clientes")
+@RequestMapping(value="/clientes")
 public class ClienteResource {
 
 	@Autowired
