@@ -3,6 +3,9 @@ package com.example.demo.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -32,6 +35,8 @@ public class Pedido implements Serializable {private static final long serialVer
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
+//	@OneToOne(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<ItemPedido>();
 
 	public Pedido() {
 		super();
@@ -44,6 +49,15 @@ public class Pedido implements Serializable {private static final long serialVer
 //		this.pagamento = pagamento;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 		this.cliente = cliente;
+	}
+	
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	public Integer getId() {
@@ -85,6 +99,24 @@ public class Pedido implements Serializable {private static final long serialVer
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		return Objects.equals(id, other.id);
+	}
+
 	
 	
 }
