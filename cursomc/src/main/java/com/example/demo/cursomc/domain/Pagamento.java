@@ -1,27 +1,42 @@
 package com.example.demo.cursomc.domain;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import com.example.demo.cursomc.domain.enums.EstadoPagamento;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 
 @Entity 
-public abstract class  Pagamento {
-
-	private Integer id;
-	private EstadoPagamento estadoPagamento;
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class  Pagamento implements Serializable{
 	
-	private Pagamento pagamento;
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private Integer id;
+	private Integer estadoPagamento;
+	@OneToOne
+	@JoinColumn (name = "pedido_id")
+	@MapsId
+	private Pedido pedido;
 
 	
 	public Pagamento() {
 		super();
 	}
 
-	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pagamento pagamento) {
+	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estadoPagamento = estadoPagamento;
-		this.pagamento = pagamento;
+		this.estadoPagamento = estadoPagamento.getCod();
+		this.pedido = pedido;
 	}
 
 	public Integer getId() {
@@ -33,20 +48,38 @@ public abstract class  Pagamento {
 	}
 
 	public EstadoPagamento getEstadoPagamento() {
-		return estadoPagamento;
+		return EstadoPagamento.toEnum(estadoPagamento);
 	}
 
 	public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-		this.estadoPagamento = estadoPagamento;
+		this.estadoPagamento = estadoPagamento.getCod();
 	}
 
-	public Pagamento getPagamento() {
-		return pagamento;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
-	public void setPagamento(Pagamento pagamento) {
-		this.pagamento = pagamento;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pagamento other = (Pagamento) obj;
+		return Objects.equals(id, other.id);
+	}
+
 	
 	
 	
