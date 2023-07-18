@@ -20,4 +20,9 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new com.example.demo.cursomc.service.exception.ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
+	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
 }
