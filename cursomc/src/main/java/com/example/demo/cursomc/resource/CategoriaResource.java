@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.demo.cursomc.domain.Categoria;
 import com.example.demo.cursomc.service.CategoriaService;
@@ -25,7 +24,7 @@ public class CategoriaResource {
 	
 	
 	@RequestMapping(value= "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> search (@PathVariable Integer id) {
+	public ResponseEntity<Categoria> search (@PathVariable Integer id) {
 
 		Categoria obj = service.find(id); 
 		
@@ -36,10 +35,18 @@ public class CategoriaResource {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Categoria obj){
 		obj = service.insert(obj);
-//		UriComponentsBuilder urii = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id");
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value= "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update (@RequestBody Categoria obj, @PathVariable Integer id){
+		obj.setId(id);
+		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
+		
 	}
 }
