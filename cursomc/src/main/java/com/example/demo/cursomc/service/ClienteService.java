@@ -10,49 +10,88 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.cursomc.domain.Cidade;
 import com.example.demo.cursomc.domain.Cliente;
+import com.example.demo.cursomc.domain.Endereco;
+import com.example.demo.cursomc.domain.enums.TipoCliente;
 import com.example.demo.cursomc.dto.ClienteDTO;
+import com.example.demo.cursomc.dto.ClienteNewDTO;
 import com.example.demo.cursomc.repositories.ClienteRepository;
+import com.example.demo.cursomc.repositories.EnderecoRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository repo;
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public Cliente find(Integer id) {
 		
-		Optional<Cliente> obj = repo.findById(id);
+		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new com.example.demo.cursomc.service.exception.ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	}
+	
+	@Transactional
+	public Cliente insert(Cliente obj) {
+		obj.setId(null);
+		obj = clienteRepository.save(obj);
+		enderecoRepository.saveAll(obj.getEnderecos());
+		return clienteRepository.save(obj);
 	}
 	
 	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
 		updateData(newObj, obj);
-		return repo.save(newObj);
+		return clienteRepository.save(newObj);
 	}
-
+	
 	public void delete(Integer id) {
 		find(id);
 		try {
-			repo.deleteById(id);
+			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new com.example.demo.cursomc.service.exception.DataIntegrityViolationException("Nao e possivel excluir porque há entidades relacionadas.");
 		}
 	}
 
 	public List<Cliente> findAll() {
-		return repo.findAll();
+		return clienteRepository.findAll();
 	}
 	
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-		return repo.findAll(pageRequest);
+		return clienteRepository.findAll(pageRequest);
 	}
 	
 	public Cliente fromDTO(ClienteDTO objDTO) {
 		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null);
+	}
+	
+	public Cliente fromDTO(ClienteNewDTO objDTO) {
+		
+		Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOrCnpj(), TipoCliente.toEnum(objDTO.getTipoCliente()));
+		Cidade cid = new Cidade(objDTO.getCidadeId(), null, null);
+		Endereco end = new Endereco(null, objDTO.getLogadouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getCep(), cli, cid);
+		cli.getEnderecos().add(end);
+		cli.getTelefones().add(objDTO.getTelefone1());
+		
+		/* "nome" = "ruan Tarcisio", "email" = "ewewew@gmads.com", "tipocliente" = 1, "telefone1 = "432432432", "telefone2" = "321321321", "logadouro" = "rua das kayas", 
+		"numero" = "420", "complemento" = "n/a", "bairro" = "sativa", "cep" = "40390755",
+		
+		*/
+		
+		if (objDTO.getTelefone2() != null) {
+			cli.getTelefones().add(objDTO.getTelefone2());
+		}
+		if (objDTO.getTelefone3() != null) {
+			cli.getTelefones().add(objDTO.getTelefone3());
+		}
+		return cli;
 	}
 	
 	private void updateData(Cliente newObj, Cliente obj) {
