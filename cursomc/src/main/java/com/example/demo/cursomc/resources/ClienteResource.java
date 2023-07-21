@@ -1,5 +1,4 @@
-package com.example.demo.cursomc.resource;
-
+package com.example.demo.cursomc.resources;
 
 import java.net.URI;
 import java.util.List;
@@ -16,42 +15,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.demo.cursomc.domain.Categoria;
-import com.example.demo.cursomc.dto.CategoriaDTO;
-import com.example.demo.cursomc.service.CategoriaService;
+import com.example.demo.cursomc.domain.Cliente;
+import com.example.demo.cursomc.dto.ClienteDTO;
+import com.example.demo.cursomc.dto.ClienteNewDTO;
+import com.example.demo.cursomc.services.ClienteService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
+@RequestMapping(value="/clientes")
+public class ClienteResource {
 
 	@Autowired
-	private CategoriaService service;
-	
+	private ClienteService service;
 	
 	@RequestMapping(value= "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Categoria> search (@PathVariable Integer id) {
-
-		Categoria obj = service.find(id); 
+	public ResponseEntity<Cliente> search (@PathVariable Integer id) {
+		
+		Cliente obj = service.find(id); 
+		
 		return ResponseEntity.ok().body(obj);
+		
 	}
-	
+
+		
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO objDTO){
-		
-		Categoria obj = service.fromDTO(objDTO);
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+		Cliente obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
-		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(objDTO.getId()).toUri();
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
+	
 	@RequestMapping(value= "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update (@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id){
+	public ResponseEntity<Void> update (@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id){
 		
-		Categoria obj = service.fromDTO(objDTO);
+		Cliente obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		
@@ -65,23 +66,22 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDTO>> searchAll (){
+	public ResponseEntity<List<ClienteDTO>> searchAll (){
 
-		List<Categoria> listObj = service.findAll(); 
-		List<CategoriaDTO> listDTO = listObj.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		List<Cliente> listObj = service.findAll(); 
+		List<ClienteDTO> listDTO = listObj.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<CategoriaDTO>> findPage (
+	public ResponseEntity<Page<ClienteDTO>> findPage (
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction){
 
-		Page<Categoria> listObj = service.findPage(page, linesPerPage, orderBy, direction); 
-		Page<CategoriaDTO> listDTO = listObj.map(obj -> new CategoriaDTO(obj));
+		Page<Cliente> listObj = service.findPage(page, linesPerPage, orderBy, direction); 
+		Page<ClienteDTO> listDTO = listObj.map(obj -> new ClienteDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
 }

@@ -1,4 +1,4 @@
-package com.example.demo.cursomc.resource.exception;
+package com.example.demo.cursomc.resources.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.demo.cursomc.service.exception.DataIntegrityViolationException;
-import com.example.demo.cursomc.service.exception.ObjectNotFoundException;
+import com.example.demo.cursomc.services.exception.DataIntegrityViolationException;
+import com.example.demo.cursomc.services.exception.ObjectNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 

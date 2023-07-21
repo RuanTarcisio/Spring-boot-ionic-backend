@@ -1,4 +1,4 @@
-package com.example.demo.cursomc.service;
+package com.example.demo.cursomc.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class ClienteService {
 	public Cliente find(Integer id) {
 		
 		Optional<Cliente> obj = clienteRepository.findById(id);
-		return obj.orElseThrow(() -> new com.example.demo.cursomc.service.exception.ObjectNotFoundException(
+		return obj.orElseThrow(() -> new com.example.demo.cursomc.services.exception.ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 	
@@ -55,7 +55,7 @@ public class ClienteService {
 		try {
 			clienteRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new com.example.demo.cursomc.service.exception.DataIntegrityViolationException("Não é possivel excluir porque há pedidos relacionados.");
+			throw new com.example.demo.cursomc.services.exception.DataIntegrityViolationException("Não é possivel excluir porque há pedidos relacionados.");
 		}
 	}
 
@@ -79,11 +79,6 @@ public class ClienteService {
 		Endereco end = new Endereco(null, objDTO.getLogadouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getCep(), cli, cid);
 		cli.getEnderecos().add(end);
 		cli.getTelefones().add(objDTO.getTelefone1());
-		
-		/* "nome" = "ruan Tarcisio", "email" = "ewewew@gmads.com", "tipocliente" = 1, "telefone1 = "432432432", "telefone2" = "321321321", "logadouro" = "rua das kayas", 
-		"numero" = "420", "complemento" = "n/a", "bairro" = "sativa", "cep" = "40390755",
-		
-		*/
 		
 		if (objDTO.getTelefone2() != null) {
 			cli.getTelefones().add(objDTO.getTelefone2());

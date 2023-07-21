@@ -1,4 +1,4 @@
-package com.example.demo.cursomc.service;
+package com.example.demo.cursomc.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class CategoriaService {
 	public Categoria find(Integer id) {
 		
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new com.example.demo.cursomc.service.exception.ObjectNotFoundException(
+		return obj.orElseThrow(() -> new com.example.demo.cursomc.services.exception.ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
@@ -43,7 +43,7 @@ public class CategoriaService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new com.example.demo.cursomc.service.exception.DataIntegrityViolationException("Nao e possivel excluir uma categoria com produtos");
+			throw new com.example.demo.cursomc.services.exception.DataIntegrityViolationException("Nao e possivel excluir uma categoria com produtos");
 		}
 	}
 

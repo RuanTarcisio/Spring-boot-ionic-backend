@@ -1,4 +1,4 @@
-package com.example.demo.cursomc.service;
+package com.example.demo.cursomc.services;
 
 import java.util.Optional;
 
@@ -17,7 +17,7 @@ public class PedidoService {
 	public Pedido find(Integer id) {
 		
 		Optional<Pedido> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new com.example.demo.cursomc.service.exception.ObjectNotFoundException(
+		return obj.orElseThrow(() -> new com.example.demo.cursomc.services.exception.ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 }

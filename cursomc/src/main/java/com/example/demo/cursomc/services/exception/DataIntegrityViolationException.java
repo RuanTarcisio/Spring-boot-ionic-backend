@@ -1,4 +1,4 @@
-package com.example.demo.cursomc.service.exception;
+package com.example.demo.cursomc.services.exception;
 
 public class DataIntegrityViolationException extends RuntimeException{
 
