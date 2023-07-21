@@ -5,10 +5,12 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 
 import com.example.demo.cursomc.domain.Cliente;
+import com.example.demo.cursomc.services.validation.ClienteUpdate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -18,9 +20,9 @@ public class ClienteDTO implements Serializable {
 	@NotEmpty(message = "preenchimento obrigatorio")
 	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
 	@NotEmpty(message = "preenchimento obrigatorio")
 	@Email(message = "invalido")
-	
 	private String email;
 	
 	public ClienteDTO() {
