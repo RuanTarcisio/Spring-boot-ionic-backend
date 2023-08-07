@@ -11,9 +11,16 @@ import com.example.demo.cursomc.domain.ItemPedido;
 import com.example.demo.cursomc.domain.PagamentoComBoleto;
 import com.example.demo.cursomc.domain.Pedido;
 import com.example.demo.cursomc.domain.enums.EstadoPagamento;
+import com.example.demo.cursomc.repositories.ClienteRepository;
 import com.example.demo.cursomc.repositories.ItemPedidoRepository;
 import com.example.demo.cursomc.repositories.PagamentoRepository;
 import com.example.demo.cursomc.repositories.PedidoRepository;
+import com.example.demo.cursomc.repositories.ProdutoRepository;
+
+
+/*
+ * 	USAR FIND DO SERVICE AO INVES DE FINDBYID OU GETREFERENCEBYID
+ */
 
 @Service
 public class PedidoService {
@@ -25,9 +32,11 @@ public class PedidoService {
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
-	private ProdutoService produtoService;
-	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	@Autowired
+	private ClienteService clienteService;
+	@Autowired
+	private ProdutoRepository produtoRepository;
 	
 	public Pedido find(Integer id) {
 		
@@ -40,6 +49,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		
@@ -52,10 +62,12 @@ public class PedidoService {
 		
 		for(ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoRepository.getReferenceById(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens()); 
+		System.out.println(obj);
 		return obj;
 	}
 }
