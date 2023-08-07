@@ -2,13 +2,13 @@ package com.example.demo.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.example.demo.cursomc.domain.Cliente;
 import com.example.demo.cursomc.services.validation.ClienteUpdate;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 
 @ClienteUpdate
 public class ClienteDTO implements Serializable {

@@ -2,12 +2,12 @@ package com.example.demo.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.example.demo.cursomc.services.validation.ClienteInsert;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 
 @ClienteInsert
 public class ClienteNewDTO implements Serializable{
@@ -40,11 +40,8 @@ public class ClienteNewDTO implements Serializable{
 	private String telefone3;
 	
 	private Integer cidadeId;
-	
-	
 
 	public ClienteNewDTO() {
-
 	}
 
 	public String getNome() {

@@ -13,29 +13,37 @@ import com.example.demo.cursomc.domain.Categoria;
 import com.example.demo.cursomc.domain.Produto;
 import com.example.demo.cursomc.repositories.CategoriaRepository;
 import com.example.demo.cursomc.repositories.ProdutoRepository;
+import com.example.demo.cursomc.services.exception.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
 
 	@Autowired
-	private ProdutoRepository produtoRepo;
-	
+	private ProdutoRepository produtoRepository;
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
+
 	public Produto find(Integer id) {
-		
-		Optional<Produto> obj = produtoRepo.findById(id);
-		return obj.orElseThrow(() -> new com.example.demo.cursomc.services.exception.ObjectNotFoundException(
+		Optional<Produto> obj = produtoRepository.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
+	}
+
+	public List<Produto> findAll() {
+		return produtoRepository.findAll();
 	}
 	
 	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction){
 		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-		List<Categoria> categorias = categoriaRepository.findAll(ids);
+		List<Categoria> categorias = categoriaRepository.findAllById(ids);
+
+		if(ids.isEmpty()) {
+			categorias = categoriaRepository.findAll();
+		}
 		
-		return produtoRepo.search(pageRequest);
-		
+		return produtoRepository.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
 	}
+	
 }

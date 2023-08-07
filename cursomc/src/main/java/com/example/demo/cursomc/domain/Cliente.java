@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import com.example.demo.cursomc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Cliente implements Serializable{
@@ -113,9 +113,9 @@ public class Cliente implements Serializable{
 		this.pedidos = pedidos;
 	}
 
-	public void setTipoCliente(Integer tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
+//	public void setTipoCliente(Integer tipoCliente) {
+//		this.tipoCliente = tipoCliente;
+//	}
 
 	public Set<String> getTelefones() {
 		return telefones;

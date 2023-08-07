@@ -3,6 +3,8 @@ package com.example.demo.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -18,8 +20,6 @@ import com.example.demo.cursomc.dto.ClienteDTO;
 import com.example.demo.cursomc.dto.ClienteNewDTO;
 import com.example.demo.cursomc.repositories.ClienteRepository;
 import com.example.demo.cursomc.repositories.EnderecoRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class ClienteService {

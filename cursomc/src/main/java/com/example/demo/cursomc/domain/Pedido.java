@@ -7,19 +7,17 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-//import jakarta.persistence.Temporal;
-//import jakarta.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Pedido implements Serializable {private static final long serialVersionUID = 1L;
@@ -56,6 +54,14 @@ public class Pedido implements Serializable {private static final long serialVer
 		this.cliente = cliente;
 	}
 	
+	public double getValorTotal() {
+		double soma = 0.0;
+		
+		for(ItemPedido ip : itens) {
+			soma += ip.getSubTotal();
+		}
+		return soma;
+	}
 
 	public Set<ItemPedido> getItens() {
 		return itens;

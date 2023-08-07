@@ -2,11 +2,11 @@ package com.example.demo.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.example.demo.cursomc.domain.Categoria;
-
-import jakarta.validation.constraints.NotEmpty;
 
 public class CategoriaDTO implements Serializable {
 	
