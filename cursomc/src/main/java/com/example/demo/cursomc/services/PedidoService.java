@@ -11,7 +11,6 @@ import com.example.demo.cursomc.domain.ItemPedido;
 import com.example.demo.cursomc.domain.PagamentoComBoleto;
 import com.example.demo.cursomc.domain.Pedido;
 import com.example.demo.cursomc.domain.enums.EstadoPagamento;
-import com.example.demo.cursomc.repositories.ClienteRepository;
 import com.example.demo.cursomc.repositories.ItemPedidoRepository;
 import com.example.demo.cursomc.repositories.PagamentoRepository;
 import com.example.demo.cursomc.repositories.PedidoRepository;
@@ -37,6 +36,8 @@ public class PedidoService {
 	private ClienteService clienteService;
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private EmailService emailService;
 	
 	public Pedido find(Integer id) {
 		
@@ -67,7 +68,8 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens()); 
-		System.out.println(obj);
+//		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }

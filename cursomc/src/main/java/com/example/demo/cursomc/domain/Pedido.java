@@ -150,7 +150,7 @@ public class Pedido implements Serializable {private static final long serialVer
 			builder.append(ip.toString());
 //			builder.append(getValorTotal());
 		}
-		builder.append(", Valor Total: ");
+		builder.append("Valor Total: ");
 		builder.append(nf.format(getValorTotal()));
 		return builder.toString();
 	}
