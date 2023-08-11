@@ -16,11 +16,14 @@ import org.springframework.stereotype.Service;
 import com.example.demo.cursomc.domain.Cidade;
 import com.example.demo.cursomc.domain.Cliente;
 import com.example.demo.cursomc.domain.Endereco;
+import com.example.demo.cursomc.domain.enums.Perfil;
 import com.example.demo.cursomc.domain.enums.TipoCliente;
 import com.example.demo.cursomc.dto.ClienteDTO;
 import com.example.demo.cursomc.dto.ClienteNewDTO;
 import com.example.demo.cursomc.repositories.ClienteRepository;
 import com.example.demo.cursomc.repositories.EnderecoRepository;
+import com.example.demo.cursomc.security.UserSS;
+import com.example.demo.cursomc.services.exception.AuthorizationException;
 
 @Service
 public class ClienteService {
@@ -35,6 +38,10 @@ public class ClienteService {
 	
 	public Cliente find(Integer id) {
 		
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new com.example.demo.cursomc.services.exception.ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
