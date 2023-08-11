@@ -35,6 +35,15 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<ClienteDTO>> findAll() {
+		List<Cliente> list = service.findAll();
+		List<ClienteDTO> listDto = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());  
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDTO(objDto);
@@ -58,15 +67,7 @@ public class ClienteResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClienteDTO>> findAll() {
-		List<Cliente> list = service.findAll();
-		List<ClienteDTO> listDto = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());  
-		return ResponseEntity.ok().body(listDto);
-	}
-	
+		
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<ClienteDTO>> findPage(

@@ -20,7 +20,7 @@ import com.example.demo.cursomc.services.MockEmailService;
 		
 		@Bean
 		public boolean instantiateDataBase() throws ParseException {
-			dbService.instantiateDataBase();
+			dbService.instantiateTestDatabase();
 			return true;
 		}
 		
